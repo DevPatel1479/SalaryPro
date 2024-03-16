@@ -5,6 +5,9 @@
     overflow: hidden;
 }
 
+.hidden {
+    display: none;
+}
 
 .navbar {
     display: flex;
