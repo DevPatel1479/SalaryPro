@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Home from './Home';
 import Signup from './Signup';
 import Login from './Login';
@@ -12,7 +13,7 @@ import './Navbar.css'; // Import your CSS file for styling
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-
+axios.defaults.baseURL = 'http://192.168.0.121:3000'; // Replace with the IP address of the server
 
 const App = () => {
     useEffect(() => {
@@ -20,6 +21,19 @@ const App = () => {
         return () => {
             AOS.refresh();
         };
+    }, []);
+
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        axios.get('http://192.168.0.121:3000/api/data') // Use relative URL here
+            .then(response => {
+                console.log(response.data);
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }, []);
 
     return (
@@ -63,8 +77,4 @@ const App = () => {
     );
 }
 
-
 export default App;
-
-
-
