@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./Passenger_SignUp.css";
 
+import axios from "axios";
+
+axios.defaults.baseURL = 'http://localhost:3000'; // Replace with the IP address of the server
+
 const PassengerSignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -35,18 +39,24 @@ const PassengerSignUp = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Add your signup logic here
-      console.log("Form Data:", formData);
-      // Reset the form after submission
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        phoneNumber: ""
-      });
+      try {
+        console.log(formData);
+        const url = "http://localhost:3000/api/passenger_data"
+        const response = axios.post(url, formData, { headers: { 'Content-Type': 'application/json' } });
+        console.log('Form data saved successfully:', (await response).data);
+        // Reset the form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          password: '',
+          phoneNumber: ''
+        });
+      } catch (error) {
+        console.error('Error saving form data:', error.message);
+      }
     }
   };
 
