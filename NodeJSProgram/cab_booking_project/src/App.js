@@ -11,7 +11,7 @@ import Login from './Login';
 import Signup from './Signup';
 import Help from './Help';
 import DriverSignUp from './DriverSignUp';
-
+import PassengerSignUp from './PassengerSignUp';
 const App = () => {
     useEffect(() => {
         AOS.init({ duration: 2000 });
@@ -33,6 +33,7 @@ const App = () => {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/help" element={<Help />} />
                     <Route path="/signup/driver" element={<DriverSignUp />} />
+                    <Route path="/signup/passenger" element={<PassengerSignUp />} />
                 </Routes>
             </div>
         </Router>
@@ -44,7 +45,8 @@ const Navbar = () => {
     const [showNavbar, setShowNavbar] = useState(true);
 
     useEffect(() => {
-        setShowNavbar(location.pathname !== '/signup/driver');
+        setShowNavbar(location.pathname !== '/signup/driver' && location.pathname !== '/signup/passenger');
+
     }, [location]);
 
     return (
